@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencode';
-axios.defaults.baseURL = 'http://note-server.hunger-valley.com';
+axios.defaults.baseURL = 'https://note-server.hunger-valley.com';
 // 允许跨域请求
 axios.defaults.withCredentials = true;
 
