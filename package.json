@@ -11,6 +11,7 @@
     "deploy:github": "sh scripts/deploy-github.sh"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
