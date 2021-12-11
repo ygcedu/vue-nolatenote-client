@@ -32,10 +32,7 @@
 
 <script>
 import Auth from '@/apis/auth';
-
-// Auth.getInfo().then(data => {
-//   console.log(data);
-// });
+import Bus from '@/helpers/bus';
 
 export default {
   data() {
@@ -101,16 +98,14 @@ export default {
         this.login.notice = '密码长度为6~16个字符';
         return;
       }
-      this.login.isError = false;
-      this.login.notice = '';
 
-      console.log(`start login..., username: ${this.login.username} , password: ${this.login.password}`);
       Auth.login({
         username: this.login.username,
         password: this.login.password
       }).then(data => {
         this.login.isError = false;
         this.login.notice = '';
+        Bus.$emit('userInfo', {username: this.login.username});
         this.$router.push({path: 'notebooks'});
       }).catch(data => {
         this.login.isError = true;
