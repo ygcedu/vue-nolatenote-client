@@ -1,7 +1,7 @@
 <template>
   <div class="detail" id="notebook-list">
     <header>
-      <a href="#" class="btn" @click="onCreate"><i class="iconfont icon-plus"></i>新建笔记本</a>
+      <a href="#" class="btn" @click.prevent="onCreate"><i class="iconfont icon-plus"></i>新建笔记本</a>
     </header>
     <main>
       <div class="layout">
@@ -11,8 +11,8 @@
             <div>
               <span class="iconfont icon-notebook"/>{{ notebook.title }}
               <span>{{ notebook.noteCounts }}</span>
-              <span class="action" @click="onEdit">编辑</span>
-              <span class="action" @click="onDelete">删除</span>
+              <span class="action" @click.stop.prevent="onEdit(notebook)">编辑</span>
+              <span class="action" @click.stop.prevent="onDelete(notebook)">删除</span>
               <span class="date">3天前</span>
             </div>
           </router-link>
@@ -50,11 +50,11 @@ export default {
     onCreate() {
       console.log('create...');
     },
-    onEdit() {
-      console.log('edit...');
+    onEdit(notebook) {
+      console.log('edit...', notebook);
     },
-    onDelete() {
-      console.log('delete...');
+    onDelete(notebook) {
+      console.log('delete...', notebook);
     }
   }
 };
