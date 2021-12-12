@@ -28,6 +28,7 @@
 <script>
 import Notebooks from '@/apis/notebooks';
 import Notes from '@/apis/notes';
+import Bus from '@/helpers/bus';
 
 export default {
   created() {
@@ -40,7 +41,7 @@ export default {
       }).then(res => {
       this.notes = res.data;
       this.$emit('update:notes', this.notes);
-      // Bus.$emit('update:notes', this.notes);
+      Bus.$emit('update:notes', this.notes);
     });
   },
   props: ['curNote'],
@@ -53,15 +54,16 @@ export default {
   },
   methods: {
     handleCommand(notebookId) {
-      if (notebookId === 'trash') {
+      if (notebookId == 'trash') {
         return this.$router.push({path: '/trash'});
       }
 
-      this.curBook = this.notebooks.find(notebook => notebook.id === notebookId);
+      this.curBook = this.notebooks.find(notebook => notebook.id == notebookId);
 
       Notes.getAll({notebookId})
         .then(res => {
           this.notes = res.data;
+          this.$emit('update:notes', this.notes);
         });
     }
   }
