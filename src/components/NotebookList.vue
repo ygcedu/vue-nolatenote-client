@@ -51,8 +51,6 @@ export default {
 };
 </script>
 
-<style scoped>
-h1 {
-  color: red;
-}
+<style lang="less" scoped>
+@import url(../assets/css/notebook-list.less);
 </style>
