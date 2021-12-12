@@ -60,15 +60,7 @@ export default {
         res.data.friendlyCreatedAt = friendlyDate(res.data.createdAt);
         this.notebooks.unshift(res.data);
 
-        this.$message({
-          type: 'success',
-          message: res.msg
-        });
-      }).catch((res) => {
-        this.$message({
-          type: 'error',
-          message: res.msg
-        });
+        this.$message.success(res.msg);
       });
     },
     onEdit(notebook) {
@@ -77,22 +69,14 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPattern: /^.{1,30}$/,
-        inputErrorMessage: '标题不能为空，且不超过30个字符'
+        inputErrorMessage: '标题不能为空，且不超过30个字符',
+        inputValue: notebook.title
       }).then(({value}) => {
         title = value;
         return Notebooks.updateNotebook(notebook.id, {title});
       }).then(res => {
         notebook.title = title;
-
-        this.$message({
-          type: 'success',
-          message: res.msg
-        });
-      }).catch((res) => {
-        this.$message({
-          type: 'error',
-          message: res.msg
-        });
+        this.$message.success(res.msg);
       });
     },
     onDelete(notebook) {
@@ -104,10 +88,7 @@ export default {
         return Notebooks.deleteNotebook(notebook.id);
       }).then(res => {
         this.notebooks.splice(this.notebooks.indexOf(notebook), 1);
-        this.$message({
-          type: 'success',
-          message: res.msg
-        });
+        this.$message.success(res.msg);
       });
     }
   }
