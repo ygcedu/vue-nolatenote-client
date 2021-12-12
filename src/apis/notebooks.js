@@ -9,7 +9,15 @@ const URL = {
 
 export default {
   getAll() {
-    return request(URL.GET);
+    return new Promise((resolve, reject) => {
+      request(URL.GET)
+        .then(res => {
+          res.data = res.data.sort((notebook1, notebook2) => notebook1.createdAt < notebook2.createdAt);
+          resolve(res);
+        }).catch(err => {
+        reject(err);
+      });
+    });
   },
 
   updateNotebook(notebookId, {title = ''} = {title: ''}) {
