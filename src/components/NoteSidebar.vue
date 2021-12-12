@@ -3,7 +3,7 @@
     <span class="btn add-note">添加笔记</span>
     <el-dropdown class="notebook-title" @command="handleCommand" placement="bottom">
       <span class="el-dropdown-link">
-       我的笔记本1<i class="iconfont icon-down"></i>
+       {{ curBook.title }}<i class="iconfont icon-down"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item v-for="notebook in notebooks" :command="notebook.id">{{ notebook.title }}</el-dropdown-item>
@@ -16,7 +16,7 @@
     </div>
     <ul class="notes">
       <li v-for="note in notes">
-        <router-link :to="`/note?noteId=${note.id}`">
+        <router-link :to="`/note?noteId=${note.id}&notebookId=${curBook.id}`">
           <span class="date">{{ note.updatedAtFriendly }}</span>
           <span class="title">{{ note.title }}</span>
         </router-link>
@@ -45,39 +45,21 @@ export default {
   },
   data() {
     return {
-      notebooks: [
-        {
-          id: 1,
-          title: 'hello1'
-        },
-        {
-          id: 2,
-          title: 'hello2',
-          updatedAtFriendly: '3分钟前'
-        }
-      ],
-      notes: [
-        {
-          id: 11,
-          title: '第一个笔记',
-          updatedAtFriendly: '刚刚'
-        },
-        {
-          id: 12,
-          title: '第2个笔记',
-          updatedAtFriendly: '3分钟前'
-        }
-      ]
+      notebooks: [],
+      notes: [],
+      curBook: {}
     };
   },
   methods: {
     handleCommand(notebookId) {
-      if (notebookId !== 'trash') {
-        Notes.getAll({notebookId})
-          .then(res => {
-            this.notes = res.data;
-          });
+      if (notebookId === 'trash') {
+        return this.$router.push({path: '/trash'});
       }
+
+      Notes.getAll({notebookId})
+        .then(res => {
+          this.notes = res.data;
+        });
     }
   }
 };
