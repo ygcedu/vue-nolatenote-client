@@ -56,6 +56,8 @@ export default {
         return this.$router.push({path: '/trash'});
       }
 
+      this.curBook = this.notebooks.find(notebook => notebook.id === notebookId);
+
       Notes.getAll({notebookId})
         .then(res => {
           this.notes = res.data;
@@ -65,6 +67,6 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url(../assets/css/note-sidebar.less);
 </style>
