@@ -8,7 +8,7 @@ const state = {
 const getters = {
   username: state => state.user === null ? '未登录' : state.user.username,
 
-  slug: state => state.user === null ? '未' : state.user.username.charAt(0)
+  slug: state => state.user === null ? '' : state.user.username.charAt(0)
 };
 
 const mutations = {

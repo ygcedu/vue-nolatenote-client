@@ -36,7 +36,7 @@
 
   .menu {
     display: flex;
-    
+
     div {
       font-size: 12px;
       padding: 2px 10px;
@@ -55,8 +55,11 @@
   }
 
   .notes {
+    height: ~"calc(100% - 66px)";
+    overflow: auto;
+
     li {
-      
+
       &:nth-child(odd) {
         background-color: #f2f2f2;
       }

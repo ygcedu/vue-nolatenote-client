@@ -40,7 +40,8 @@ export default {
 <style lang="less" scoped>
 #sidebar {
   position: relative;
-  width: 56px;
+  min-width: 56px;
+  //flex-shrink: 0;
   text-align: center;
   background-color: #2c333c;
 

@@ -53,7 +53,8 @@ export default {
         tabSize: 4,
         mode: 'text/x-markdown',
         theme: 'neat',
-        lineNumbers: false,
+        lineNumbers: true,
+        lineWrapping: true,
         line: true,
         // more codemirror options, 更多 codemirror 的高级配置...
       }
@@ -117,5 +118,6 @@ export default {
   align-items: stretch;
   background-color: #fff;
   flex: 1;
+  max-width: ~"calc(100% - 56px)";
 }
 </style>
