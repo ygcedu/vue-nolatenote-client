@@ -37,66 +37,58 @@
 </template>
 
 <script>
-import Auth from '@/apis/auth';
 import MarkdownIt from 'markdown-it';
-
+import {mapActions, mapGetters, mapMutations} from 'vuex';
 
 let md = new MarkdownIt();
 
 export default {
   data() {
-    return {
-      msg: '回收站',
-      curTrashNote: {
-        id: 2,
-        title: '我的笔记',
-        content: '## hello',
-        createdAtFriendly: '2小时前',
-        updatedAtFriendly: '刚刚'
-      },
-      belongTo: '我的笔记本',
-      trashNotes: [
-        {
-          id: 2,
-          title: '我的笔记',
-          content: '## hello',
-          createdAtFriendly: '2小时前',
-          updatedAtFriendly: '刚刚'
-        },
-        {
-          id: 3,
-          title: '我的笔记',
-          content: '## hello',
-          createdAtFriendly: '2小时前',
-          updatedAtFriendly: '刚刚'
-        }
-      ]
-    };
+    return {};
   },
 
   created() {
-    Auth.getInfo()
-      .then(res => {
-        if (!res.isLogin) {
-          this.$router.push({path: '/login'});
-        }
+    this.checkLogin({path: '/login'});
+    this.getNotebooks();
+    this.getTrashNotes()
+      .then(() => {
+        this.setCurTrashNote({curTrashNoteId: this.$route.query.noteId});
       });
   },
 
   computed: {
+    ...mapGetters([
+      'trashNotes',
+      'curTrashNote',
+      'belongTo'
+    ]),
     compiledMarkdown() {
       return md.render(this.curTrashNote.content || '');
     }
   },
 
   methods: {
+    ...mapMutations([
+      'setCurTrashNote'
+    ]),
+    ...mapActions([
+      'checkLogin',
+      'deleteTrashNote',
+      'revertTrashNote',
+      'getTrashNotes',
+      'getNotebooks'
+    ]),
     onDelete() {
-      console.log('delete');
+      console.log({noteId: this.curTrashNote.id});
+      this.deleteTrashNote({noteId: this.curTrashNote.id});
     },
-
     onRevert() {
-      console.log('revert');
+      this.revertTrashNote({noteId: this.curTrashNote.id});
     }
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.setCurTrashNote({curTrashNoteId: to.query.noteId});
+    next();
   }
 };
 </script>
