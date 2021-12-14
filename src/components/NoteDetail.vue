@@ -112,6 +112,7 @@ export default {
 
 <style lang="less">
 @import url(../assets/css/note-detail.less);
+@import url(../assets/css/vuepress.less);
 
 #note {
   display: flex;
