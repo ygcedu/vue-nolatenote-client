@@ -12,25 +12,25 @@
         <i class="iconfont icon-trash"/>
       </router-link>
     </div>
-    <div class="logout" @click="logout">
-      <i class="iconfont icon-logout"/>
+    <div class="logout">
+      <i class="iconfont icon-logout" @click="onLogout"></i>
     </div>
   </div>
 </template>
 
 <script>
 import avatar from '@/components/Avatar';
-import Auth from '@/apis/auth';
+import {mapActions} from 'vuex';
 
 export default {
   components: {
     avatar
   },
   methods: {
-    logout() {
-      Auth.logout().then(data => {
-        this.$router.push({path: 'login'});
-      });
+    ...mapActions(['logout']),
+
+    onLogout() {
+      this.logout({path: '/login'});
     }
   }
 };
